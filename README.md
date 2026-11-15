@@ -8,7 +8,7 @@ Save notes on the World Map in World of Warcraft: Forever. MapMemo can remind yo
 
 ## 🗺️ Core Features
 
-- **Zone reminders** — Get a reminder when you enter a selected zone. An open one-time reminder can alert once more when you leave after seeing the arrival alert.
+- **Zone reminders** — Get a reminder when you enter a selected zone. An open one-time reminder can alert when you leave its zone, including when entering an instance, and again as soon as you return.
 - **Map pins** — Mark a spot, add a note, and get a reminder when you approach it. Hover over a pin to read the note or click it to edit.
 - **World Map integration** — Select the pin tab alongside Quests and Nearby Services to show MapMemo in the right-hand quest pane. Nearby Services is provided by ShortestPathForever when installed.
 - **Reminder management** — Search and filter your list, pause or complete reminders, and choose whether each reminder belongs to one character or the whole account.
@@ -33,4 +33,4 @@ Pin proximity uses a percentage of the zone map. A recurring reminder can alert 
 
 The interface supports English and German and follows your game language, with English as the fallback.
 
-**Version 0.1.0 targets Forever 1.60.1 (interface 16001).** [Changelog](CHANGELOG.md)
+**Version 0.1.1 targets Forever 1.60.1 (interface 16001).** [Changelog](CHANGELOG.md)

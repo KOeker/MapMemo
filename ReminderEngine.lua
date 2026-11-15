@@ -108,6 +108,7 @@ local function observe(item, distanceSquared, now, due)
     local entered = not runtime.inside
     local returning = runtime.inside == false and item.type == "zone" and item.repeatMode == "once"
     runtime.inside = true
+    if returning and runtime.due == "leave" then runtime.due = "arrival" end
     if runtime.due or not entered then return end
     if not returning and item.lastTriggeredAt and now - item.lastTriggeredAt < R.settings().cooldownSeconds then return end
     runtime.due = "arrival"
@@ -140,19 +141,28 @@ local function updateTicker(needed)
     end
 end
 
-function E.evaluate()
+function E.evaluate(eventMap)
     if not R.settings() then return end
     index()
     local current = M.currentMap()
-    local zone = current and M.playerZone(current)
+    local inInstance = A.safe(IsInInstance)
+    local zone
+    if inInstance == true then
+        zone = false
+    else
+        zone = (current and M.playerZone(current)) or nil
+        if not zone and A.mapID(eventMap) then zone = M.playerZone(eventMap) or nil end
+    end
     local now = A.now()
     local due = {}
-    if zone then
-        if previousZone ~= zone then leaveZone(zones[previousZone], due) end
+    if zone ~= nil and previousZone ~= zone then
+        leaveZone(zones[previousZone], due)
         previousZone = zone
+    end
+    if zone then
         for _, item in ipairs(zones[zone] or {}) do observe(item, nil, now, due) end
     end
-    local outdoors = A.safe(IsInInstance) == false
+    local outdoors = inInstance == false
     if current and zone == current and outdoors and current ~= previousPointMap then
         leave(points[previousPointMap])
         previousPointMap, lastMap = current, nil
@@ -175,4 +185,5 @@ function E.evaluate()
     if A.Notifications then
         for _, id in ipairs(due) do A.Notifications.enqueue(id) end
     end
+    return zone
 end

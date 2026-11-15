@@ -1,7 +1,7 @@
 local addonName, A = ...
 local L = A.L
 local frame = CreateFrame("Frame")
-local initialized, loggedIn, pendingOpen
+local initialized, loggedIn, pendingOpen, zoneCheckQueued
 
 local function updateMap()
     if not loggedIn or A.inCombat() then return end
@@ -65,7 +65,15 @@ local function login()
     A.print(L.LOADED:format(version))
 end
 
-frame:SetScript("OnEvent", function(_, event, argument)
+local function scheduleZoneCheck()
+    if zoneCheckQueued or not C_Timer or type(C_Timer.After) ~= "function" then return end
+    zoneCheckQueued = pcall(C_Timer.After, 0.25, function()
+        zoneCheckQueued = nil
+        A.Engine.evaluate()
+    end)
+end
+
+frame:SetScript("OnEvent", function(_, event, argument, newMapID)
     if event == "ADDON_LOADED" then
         if argument == addonName then
             init()
@@ -96,7 +104,13 @@ frame:SetScript("OnEvent", function(_, event, argument)
         updateMap()
     elseif loggedIn then
         A.Repository.expireCompleted()
-        A.Engine.evaluate()
+        local mapHint
+        if event == "PLAYER_MAP_CHANGED" and A.mapID(newMapID) then mapHint = newMapID end
+        local zone = A.Engine.evaluate(mapHint)
+        if zone == nil or event == "PLAYER_ENTERING_WORLD" or event == "ZONE_CHANGED_NEW_AREA"
+            or event == "PLAYER_MAP_CHANGED" then
+            scheduleZoneCheck()
+        end
     end
 end)
 

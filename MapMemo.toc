@@ -4,7 +4,7 @@
 ## Notes: Local map pins and reminders for World of Warcraft: Forever.
 ## Notes-deDE: Lokale Kartenpins und Erinnerungen für World of Warcraft: Forever.
 ## Author: KOeker
-## Version: 0.1.0
+## Version: 0.1.1
 ## OptionalDeps: ForeverCore
 ## SavedVariables: MapMemoDB
 ## X-License: MIT
