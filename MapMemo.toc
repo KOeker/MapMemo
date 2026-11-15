@@ -1,0 +1,25 @@
+## Interface: 16001
+## Title: MapMemo
+## IconTexture: Interface\AddOns\MapMemo\Media\Icon
+## Notes: Local map pins and reminders for World of Warcraft: Forever.
+## Notes-deDE: Lokale Kartenpins und Erinnerungen für World of Warcraft: Forever.
+## Author: KOeker
+## Version: 0.1.0
+## OptionalDeps: ForeverCore
+## SavedVariables: MapMemoDB
+## X-License: MIT
+
+Localization/enUS.lua
+Localization/deDE.lua
+Localization/Init.lua
+Capabilities.lua
+Storage.lua
+MapContext.lua
+ReminderRepository.lua
+ReminderEngine.lua
+Notifications.lua
+ReminderUI.lua
+MapPins.lua
+MapMemoPins.xml
+MapIntegration.lua
+Core.lua

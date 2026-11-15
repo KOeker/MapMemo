@@ -1,0 +1,15 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Frame name="MapMemoPinTemplate" enableMouse="true" virtual="true">
+        <Size x="18" y="18"/>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture setAllPoints="true">
+                    <Color r="0.06" g="0.12" b="0.17" a="0.95"/>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad function="MapMemoInitializePin"/>
+        </Scripts>
+    </Frame>
+</Ui>
